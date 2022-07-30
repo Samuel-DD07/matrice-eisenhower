@@ -11,3 +11,11 @@ exports.elementExist = (element) => {
 exports.dateNow = () =>{
     return new Date().toLocaleString()
 }
+
+exports.elementFindTask = (id, data) =>{
+    return data.find(e => e.id_task === id)
+}
+
+exports.elementFindUser = (id, data) =>{
+    return data.find(e => e.id_user === id)
+}
