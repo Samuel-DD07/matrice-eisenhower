@@ -8,8 +8,8 @@ exports.getAllUser = (req, res) => {
 
 // get one user
 exports.getOneUser = (req, res) => {
-    const id_user = parseInt(req.params.idUser)
-    const theUser = allUser.find(theUser => theUser.id_user === id_user)
+    const name_user = req.params.name_user
+    const theUser = allUser.find(theUser => theUser.name_user === name_user)
     res.json(methode.elementExist(theUser))
 }
 

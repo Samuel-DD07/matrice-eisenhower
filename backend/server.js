@@ -19,7 +19,7 @@ app
 
 app
     .get('/users', userCtrl.getAllUser)
-    .get('/users/:idUser', userCtrl.getOneUser)
+    .get('/users/:name_user', userCtrl.getOneUser)
     .post('/users', userCtrl.createOneUser)
     .delete('/users/:idUser', userCtrl.deleteOneUser)
     .put('/user/:idUser', userCtrl.updateOneUser)
