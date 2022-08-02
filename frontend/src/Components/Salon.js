@@ -1,24 +1,30 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import CreateOneTask from "./CreateOneTask"
 
 export default function Salon(props){
 
     const idUser = useParams()
     const [data, setData] = useState()
+    let [change, setChange] = useState(false)
+
+    if (change) {
+        window.location.reload()
+        change = false
+    }
 
     function sortMyData(obj){
         obj.sort((a, b) => {
             return b.Importance_task - a.Importance_task || b.Urgent_task - a.Urgent_task;
-        });
+        })
         return obj
     }
 
     function filterMyData(obj, importance, urgence){
-        const objFilter = obj.filter(function(e){
+        return obj.filter(function(e){
             return e.Importance_task === importance && e.Urgent_task === urgence
         })
-        return objFilter
     }
 
     useEffect(() => {
@@ -37,8 +43,8 @@ export default function Salon(props){
                     .map((e, i) =>
                         <li key={i}>
                             <p>{e.name_task}</p>
-                            <p>{e.date_creation_task}</p>
-                            <p>{e.description_task}</p>
+                            <p>Modifier</p>
+                            <p>Supprimer</p>
                         </li>
                     ) 
                     : 
@@ -50,8 +56,6 @@ export default function Salon(props){
                     .map((e, i) =>
                         <li key={i}>
                             <p>{e.name_task}</p>
-                            <p>{e.date_creation_task}</p>
-                            <p>{e.description_task}</p>
                         </li>
                     ) 
                     : 
@@ -63,8 +67,6 @@ export default function Salon(props){
                     .map((e, i) =>
                         <li key={i}>
                             <p>{e.name_task}</p>
-                            <p>{e.date_creation_task}</p>
-                            <p>{e.description_task}</p>
                         </li>
                     ) 
                     : 
@@ -76,13 +78,14 @@ export default function Salon(props){
                     .map((e, i) =>
                         <li key={i}>
                             <p>{e.name_task}</p>
-                            <p>{e.date_creation_task}</p>
-                            <p>{e.description_task}</p>
                         </li>
                     ) 
                     : 
                 "En Attente..."}
             </ul>
+            <div>
+                <CreateOneTask change={change} setChange={change => setChange(change)}/>
+            </div>
         </div>
     )
 }
