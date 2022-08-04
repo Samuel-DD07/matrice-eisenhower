@@ -1,47 +1,59 @@
-let allUser = require('../models/user')
-const methode = require('../methods/my_fonction')
+const User = require('../models/User')
+const lib = require('../library/my_fonction')
+const bcrypt = require('bcrypt')
 
-// get all user
-exports.getAllUser = (req, res) => {
-    res.json(methode.elementExist(allUser))
+exports.dataUser = async (req, res) => {
+    const users = await User.find()
+    res.json(lib.tabIsEmpty(users))
 }
 
-// get one user
-exports.getOneUser = (req, res) => {
-    const name_user = req.params.name_user
-    const theUser = allUser.find(theUser => theUser.name_user === name_user)
-    res.json(methode.elementExist(theUser))
-}
-
-// create one user
-exports.createOneUser = (req, res) => {
-    const id = allUser.length+1
-    const createdUser = { 
-        ...req.body, 
-        id_user: id
-    }
-    allUser.push(createdUser)
-    res.json(methode.elementExist(createdUser))
-}
-
-// delete one user
-exports.deleteOneUser = (req, res) => {
-    const id_user = parseInt(req.params.idUser)
-    const deleteUser = allUser.find(theUser => theUser.id_user === id_user)
-    allUser = allUser.filter(theUser => theUser !== deleteUser)
-    res.json(methode.elementExist(deleteUser))
-}
-
-// update one user
-exports.updateOneUser = (req, res) => {
-    const id_user = parseInt(req.params.idUser)
-    if (methode.elementFindUser(id_user, allUser)) {
-        const updatedUser = {...req.body, id_user: id_user}
-        allUser = allUser.map(theUser => {
-            return theUser.id_user === id_user ? updatedUser : theUser
+exports.Login = (req, res) => {
+    bcrypt.hash(req.body.password_user, 10)
+    .then(async (hash) => {
+        const user = new User({
+          ...req.body,
+          password_user: hash
         })
-        res.json(methode.elementExist(updatedUser))
-    } else{
-        res.json({message: "l'element n'existe pas"})
-    }
+          await user.save()
+          .then(data => res.json(lib.elementExist(data)))
+          .catch(() => res.status(401).json({error: "cette identifiant existe déjà."}))
+    })
 }
+
+exports.Delete = async (req, res) => {
+    const id = req.params.id
+    const user = await User.deleteOne({
+      _id: id 
+    })
+    res.json(
+      !!user.deletedCount ?
+      "l'élément est bien supprimé."
+      :
+      "l'élément ne peut pas être supprimé car il n'existe pas."
+    )
+  }
+
+exports.Update = (req, res) => {
+    const id = req.params.id
+    User.updateOne({
+      _id: id
+    }, {
+      ...req.body, _id : id
+    })
+    .then(data => res.json(
+      !!data.matchedCount ?
+      "l'élément a été bien modifié."
+      :
+      "l'élément ne peut pas être modifié car il n'existe pas."
+      ))
+    .catch(error => res.status(401).json({error}))
+  }
+
+  exports.OneUser = (req, res) => {
+    const id = req.params.id
+    User.findOne({
+      _id: id
+    })
+    .then(data => res.json(lib.elementExist(data)))
+    .catch(() => res.status(401).json({message: "l'élément n'existe pas."}))
+  }

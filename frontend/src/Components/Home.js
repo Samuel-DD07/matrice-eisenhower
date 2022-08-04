@@ -1,9 +1,9 @@
 export default function Home(props){
-    return(
+    return (
         <div>
-            <h1>Bienvenue sur la Matrice Eisenhower.</h1>
-            <button onClick={() => window.location.pathname = '/Auth'}>Se connecter.</button>
-            <button onClick={() => window.location.pathname = '/Login'}>S'inscrire.</button>
+            <h1>Home</h1>
+            <h3>Description du site web</h3>
+            <p>Texte du site web</p>
         </div>
     )
 }
