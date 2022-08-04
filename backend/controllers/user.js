@@ -9,15 +9,16 @@ exports.dataUser = async (req, res) => {
 
 exports.Login = (req, res) => {
     bcrypt.hash(req.body.password_user, 10)
-    .then(async (hash) => {
+    .then(hash => {
         const user = new User({
           ...req.body,
           password_user: hash
         })
-          await user.save()
+          user.save()
           .then(data => res.json(lib.elementExist(data)))
-          .catch(() => res.status(401).json({error: "cette identifiant existe déjà."}))
+          .catch(error => res.status(401).json({error}))
     })
+    .catch(() => res.status(401).json({error}))
 }
 
 exports.Delete = async (req, res) => {
