@@ -58,3 +58,17 @@ exports.Update = (req, res) => {
     .then(data => res.json(lib.elementExist(data)))
     .catch(() => res.status(401).json({message: "l'élément n'existe pas."}))
   }
+
+  exports.Auth = (req, res) => {
+    User.findOne({
+      user_email: req.body.email_user
+    })
+    .then(data => lib.elementExist(data))
+      .then(data => {
+        const myCode = data.element.password_user
+        bcrypt.compare(req.body.password_user, myCode)
+        .then(valid => res.json(valid))
+        .catch(error => res.status(401).json({error}))
+      })
+    .catch(() => res.status(401).json({message: "l'élément n'existe pas."}))
+  }

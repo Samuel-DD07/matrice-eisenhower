@@ -11,6 +11,7 @@ router.use((req, res, next) => {
 
 router.get('/', UserCtrl.dataUser)
 router.get('/:id', UserCtrl.OneUser)
+router.post('/auth', UserCtrl.Auth)
 router.post('/', UserCtrl.Login)
 router.delete('/:id', UserCtrl.Delete)
 router.put('/:id', UserCtrl.Update)
