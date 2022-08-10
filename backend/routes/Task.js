@@ -1,7 +1,7 @@
 const express = require('express')
-const UserCtrl = require('../controllers/User')
+const TaskCtrl = require('../controllers/Task')
 const router = express.Router()
-
+const auth = require('../middleware/auth')
 
 router.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -10,11 +10,10 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/', UserCtrl.dataUser)
-router.get('/:id', UserCtrl.OneUser)
-router.post('/auth', UserCtrl.login)
-router.post('/', UserCtrl.signup)
-router.delete('/:id', UserCtrl.Delete)
-router.put('/:id', UserCtrl.Update)
+router.get('/:user_id', auth, TaskCtrl.dataTask)
+router.get('/OneTask/:id', auth, TaskCtrl.getOneTask)
+router.post('/', auth, TaskCtrl.createOneTask)
+router.delete('/:id', auth, TaskCtrl.deleteOneTask)
+router.put('/:id', auth, TaskCtrl.updateOneTask)
 
-module.exports = router 
+module.exports = router

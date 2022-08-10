@@ -26,7 +26,7 @@ export default function Login(props){
                 email_user: user_email.value,
                 password_user: user_password.value
             })
-            .then(data => window.location.pathname = `/tasks/${data.data.element._id}`)
+            .then(() => window.location.pathname = `/tasks/${user_name.value}`)
             .catch(() => setErrorMessages({ name: "user_email", message: "Cet user existe déjà. Connectez vous !" }))
             }
     
