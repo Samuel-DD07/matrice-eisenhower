@@ -11,8 +11,15 @@ exports.dataUser = async (req, res) => {
 exports.signup = (req, res) => {
     bcrypt.hash(req.body.password_user, 10)
     .then(hash => {
+
+      const token = jwt.sign(
+        {userId: req.body.email_user},
+        'RANDOM_TOKEN_SECRET',
+        {expiresIn: '24h'})
+
         const user = new User({
           ...req.body,
+          token: token,
           password_user: hash
         })
           user.save()
@@ -52,7 +59,7 @@ exports.OneUser = (req, res) => {
     .catch(() => res.status(401).json({message: "l'élément n'existe pas."}))
 }
 
-exports.login = (req, res) => {
+exports.Auth = (req, res) => {
     User.findOne({
       user_email: req.body.email_user
     })
@@ -64,13 +71,16 @@ exports.login = (req, res) => {
           if (!valid) {
             return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
           }
+
+          const token = jwt.sign(
+            {userId: data.element._id},
+            'RANDOM_TOKEN_SECRET',
+            {expiresIn: '24h'})
+
+          res.setHeader('Authorization', token)
           res.status(200).json({
               userId: data.element._id,
-              token: jwt.sign(
-                  {userId: data.element._id},
-                  'RANDOM_TOKEN_SECRET',
-                  {expiresIn: '24h'}
-              )
+              token: token
           })
         })
         .catch(error => res.status(401).json({error}))
