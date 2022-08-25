@@ -11,16 +11,10 @@ exports.dataUser = async (req, res) => {
 exports.signup = (req, res) => {
     bcrypt.hash(req.body.password_user, 10)
     .then(hash => {
-
-      const token = jwt.sign(
-        {userId: req.body.email_user},
-        'RANDOM_TOKEN_SECRET',
-        {expiresIn: '24h'})
-
         const user = new User({
           ...req.body,
-          token: token,
-          password_user: hash
+          password_user: hash,
+          token: "Bearer " + jwt.sign({userId: req.body.email_user}, 'RANDOM_TOKEN_SECRET', {expiresIn: '24h'})
         })
           user.save()
           .then(data => res.json(lib.elementExist(data)))
@@ -31,9 +25,8 @@ exports.signup = (req, res) => {
 
 exports.Delete = (req, res) => {
     const id = req.params.id
-    console.log(id)
     User.deleteOne({
-      email_user: id 
+      _id: id 
     })
     .then(data => res.json(data.deletedCount))
     .catch(error => res.status(401).json({error}))
@@ -42,7 +35,7 @@ exports.Delete = (req, res) => {
 exports.Update = (req, res) => {
     const id = req.params.id
     User.updateOne({
-      email_user: id
+      _id: id
     }, {
       ...req.body
     })
@@ -53,7 +46,7 @@ exports.Update = (req, res) => {
 exports.OneUser = (req, res) => {
     const id = req.params.id
     User.findOne({
-      email_user: id
+      _id: id
     })
     .then(data => res.json(lib.elementExist(data)))
     .catch(() => res.status(401).json({message: "l'élément n'existe pas."}))
@@ -61,29 +54,23 @@ exports.OneUser = (req, res) => {
 
 exports.Auth = (req, res) => {
     User.findOne({
-      user_email: req.body.email_user
+      email_user: req.body.email_user
     })
-    .then(data => lib.elementExist(data))
-      .then(data => {
-        const myCode = data.element.password_user
+    .then(data => {
+        const myCode = data.password_user
         bcrypt.compare(req.body.password_user, myCode)
         .then(valid => {
           if (!valid) {
             return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
           }
-
-          const token = jwt.sign(
-            {userId: data.element._id},
-            'RANDOM_TOKEN_SECRET',
-            {expiresIn: '24h'})
-
-          res.setHeader('Authorization', token)
+    
           res.status(200).json({
-              userId: data.element._id,
-              token: token
+              userId: data._id,
+              usernName: data.name_user,
+              token: "Bearer " + jwt.sign({userId: req.body.email_user}, 'RANDOM_TOKEN_SECRET', {expiresIn: '24h'})
           })
         })
-        .catch(error => res.status(401).json({error}))
-      })
+      .catch(error => res.status(401).json({error}))
+    })
     .catch(() => res.status(500).json({message: "l'élément n'existe pas."}))
 }

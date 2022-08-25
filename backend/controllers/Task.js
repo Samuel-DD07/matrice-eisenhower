@@ -4,7 +4,7 @@ const lib = require('../library/my_fonction')
 exports.dataTask = async (req, res) =>{
     const id = req.params.user_id
     const tasks = await Task.find({
-      email_user: id
+      userId: id
     })
     res.json(lib.tabIsEmpty(tasks))
 }
@@ -12,7 +12,7 @@ exports.dataTask = async (req, res) =>{
 exports.getOneTask = async (req, res) =>{
     const id = req.params.id
     Task.findOne({
-      email_user: id
+      userId: id
     })
     .then(data => res.json(lib.elementExist(data)))
     .catch(() => res.status(401).json({message: "l'élément n'existe pas."}))
@@ -32,7 +32,7 @@ exports.createOneTask = (req, res) =>{
 exports.deleteOneTask = async (req, res) =>{
     const id = req.params.id
     const task = await Task.deleteOne({
-      email_user: id
+      _id: id
     })
     res.json(
       !!task.deletedCount ?
@@ -45,7 +45,7 @@ exports.deleteOneTask = async (req, res) =>{
 exports.updateOneTask = (req, res) =>{
     const id = req.params.id
       Task.updateOne({
-        email_user: id
+        userId: id
       }, {
         ...req.body, _id : id
       })
