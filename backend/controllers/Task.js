@@ -12,7 +12,7 @@ exports.dataTask = async (req, res) =>{
 exports.getOneTask = async (req, res) =>{
     const id = req.params.id
     Task.findOne({
-      userId: id
+      _id: id
     })
     .then(data => res.json(lib.elementExist(data)))
     .catch(() => res.status(401).json({message: "l'élément n'existe pas."}))
