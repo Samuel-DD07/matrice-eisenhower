@@ -9,7 +9,7 @@ exports.dataUser = async (req, res) => {
 }
 
 exports.signup = (req, res) => {
-    bcrypt.hash(req.body.password_user, 10)
+  bcrypt.hash(req.body.password_user, 10)
     .then(hash => {
         const user = new User({
           ...req.body,
@@ -20,7 +20,7 @@ exports.signup = (req, res) => {
           .then(data => res.json(lib.elementExist(data)))
           .catch(error => res.status(401).json({error}))
     })
-    .catch(() => res.status(500).json({error}))
+    .catch(error => res.status(500).json({error}))
 }
 
 exports.Delete = (req, res) => {
@@ -63,12 +63,24 @@ exports.Auth = (req, res) => {
           if (!valid) {
             return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
           }
-    
-          res.status(200).json({
-              userId: data._id,
-              usernName: data.name_user,
-              token: "Bearer " + jwt.sign({userId: req.body.email_user}, 'RANDOM_TOKEN_SECRET', {expiresIn: '24h'})
+
+          const token = "Bearer " + jwt.sign({userId: req.body.email_user}, 'RANDOM_TOKEN_SECRET', {expiresIn: '24h'})
+
+          User.updateOne({
+            _id: data._id
+          }, {
+              token: token
           })
+          .then(() => {
+            res.cookie("user_info", {
+              userId: data._id,
+              userName: data.name_user,
+              token: token
+             })
+             res.status(200).json({userId: data._id})
+          })
+          .catch(error => res.status(400).json({error}))
+
         })
       .catch(error => res.status(401).json({error}))
     })

@@ -19,6 +19,6 @@ exports.updateToken = (req, res) => {
     }, {
         token: token
     })
-    .then(data => res.json(lib.elementExist(token)))
+    .then(() => res.json(lib.elementExist(token)))
     .catch(error => res.status(400).json({error}))
 }

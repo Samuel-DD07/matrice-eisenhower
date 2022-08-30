@@ -1,6 +1,6 @@
 const express = require('express')
+const CookiesCtrl = require('../controllers/Cookies')
 const router = express.Router()
-const TokenCtrl = require('../controllers/Token')
 
 router.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -9,8 +9,8 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/:id', TokenCtrl.getToken)
-router.put('/:id', TokenCtrl.updateToken)
+router.get('/', CookiesCtrl.getCookies)
+router.get('/clear', CookiesCtrl.clearCookies)
 
 
 module.exports = router
