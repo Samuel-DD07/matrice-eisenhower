@@ -6,7 +6,7 @@ exports.dataTask = async (req, res) =>{
     const tasks = await Task.find({
       userId: id
     })
-    res.json(lib.tabIsEmpty(tasks))
+    res.status(200).json(lib.tabIsEmpty(tasks))
 }
 
 exports.getOneTask = async (req, res) =>{
@@ -14,8 +14,8 @@ exports.getOneTask = async (req, res) =>{
     Task.findOne({
       _id: id
     })
-    .then(data => res.json(lib.elementExist(data)))
-    .catch(() => res.status(401).json({message: "l'élément n'existe pas."}))
+    .then(data => res.status(200).json(lib.elementExist(data)))
+    .catch(() => res.status(404).json({message: "l'élément n'existe pas."}))
 }
 
 exports.createOneTask = (req, res) =>{
@@ -25,8 +25,8 @@ exports.createOneTask = (req, res) =>{
       date_last_modify_task: lib.dateNow()
     })
     task.save()
-    .then(data => res.json(lib.elementExist(data)))
-    .catch(error => res.status(401).json({error}))
+    .then(data => res.status(200).json(lib.elementExist(data)))
+    .catch(error => res.status(404).json({error}))
 }
 
 exports.deleteOneTask = async (req, res) =>{
@@ -34,7 +34,7 @@ exports.deleteOneTask = async (req, res) =>{
     const task = await Task.deleteOne({
       _id: id
     })
-    res.json(
+    res.status(200).json(
       !!task.deletedCount ?
       "l'élément est bien supprimé."
       :
@@ -49,11 +49,11 @@ exports.updateOneTask = (req, res) =>{
       }, {
         ...req.body, _id : id
       })
-      .then(data => res.json(
+      .then(data => res.status(200).json(
         !!data.matchedCount ?
         "l'élément a été bien modifié."
         :
         "l'élément ne peut pas être modifié car il n'existe pas."
         ))
-      .catch(error => res.status(401).json({error}))
+      .catch(error => res.status(404).json({error}))
 }
