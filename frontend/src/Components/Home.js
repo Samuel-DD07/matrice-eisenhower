@@ -1,7 +1,9 @@
 import MyTask from './MyTask'
 import styled from 'styled-components'
+import background from '../assets/Illustration.png'
 
 export default function Home(props){
+
     if (!!document.cookie) {
         return (
             <MyTask />
@@ -11,10 +13,10 @@ export default function Home(props){
             <div>
                 <Content>
                     <div>
-                        <h1>Bienvenue sur Matrice - Eisenhower !</h1>
+                        <h1>Bienvenue sur <br />Matrice - Eisenhower !</h1>
                         <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim.</p>
                     </div>
+                    <Image></Image>
                 </Content>
             </div>
         )   
@@ -24,13 +26,29 @@ export default function Home(props){
 const Content = styled.section`
     position: relative;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 100px);    
 
     & > div{
-        width: 70vw;
+        width: 70vw;        
+        z-index: 2;
+
+        & > h3, p{
+            width: 60%;    
+        }
     }
+`
+
+const Image = styled.span`
+    position: absolute;
+    right: 2vw;
+    bottom: 0px;
+    background-image: url(${background});
+    background-size: 100% 100%;
+    background-position: center;
+    height: calc(100vh - 100px);
+    opacity: 0.75;
+    width: 60vw;
 `
