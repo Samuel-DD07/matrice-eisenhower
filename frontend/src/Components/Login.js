@@ -1,13 +1,20 @@
 import axios from "axios";
 import { useState } from "react";
+import styled from 'styled-components'
 
 export default function Login(props){
 
     const [errorMessages, setErrorMessages] = useState({})
 
     const renderErrorMessage = (name) =>
+
+    name === "isValid" ? 
         name === errorMessages.name && (
-            <div>{errorMessages.message}</div>
+            <MessageTrue>{errorMessages.message}</MessageTrue>
+        )
+        :
+        name === errorMessages.name && (
+            <Message>{errorMessages.message}</Message>
         )
 
     const handleSubmit = (event) => {
@@ -34,8 +41,8 @@ export default function Login(props){
         }
 
     return(
-        <div>
-            <form onSubmit={handleSubmit}>
+        <Content>
+            <Formulaire onSubmit={handleSubmit}>
                 <div>
                     <label>Username </label>
                     <input type="text" name="user_name" />
@@ -59,7 +66,65 @@ export default function Login(props){
                 <div>
                     <input type="submit" />
                 </div>
-                </form>
-        </div>
+                </Formulaire>
+        </Content>
     )
 }
+
+const Content = styled.div`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 120vh;
+`
+
+const Formulaire = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 700px;
+    width: 450px;
+    background-color: #F1F1F1;
+    border: 2px solid  #C1C1C1;
+
+    & > div{
+        display: flex;
+        flex-direction: column;
+        margin: 20px;
+        width: 80%;
+
+        & > label{
+            font-size: 20px;
+        }
+
+        & > input{
+            padding: 20px;
+            font-size: 15px;
+        }
+
+        & > *{
+            margin: 2px;
+        }
+    }
+`
+
+const Message = styled.h3`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: white;
+    background-color: #E74C3C;
+`
+
+const MessageTrue = styled.h3`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: white;
+    background-color: #58D68D;
+`

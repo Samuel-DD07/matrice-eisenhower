@@ -16,7 +16,7 @@ export default function Home(props){
                         <h1>Bienvenue sur <br />Matrice - Eisenhower !</h1>
                         <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</h3>
                     </div>
-                    <Image></Image>
+                    {/* <Image></Image> */}
                 </Content>
             </div>
         )   
