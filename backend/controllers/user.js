@@ -11,13 +11,23 @@ exports.dataUser = async (req, res) => {
 exports.signup = (req, res) => {
   bcrypt.hash(req.body.password_user, 10)
     .then(hash => {
+
+      const token = "Bearer " + jwt.sign({userId: req.body.email_user}, 'RANDOM_TOKEN_SECRET', {expiresIn: '24h'})
+
         const user = new User({
           ...req.body,
           password_user: hash,
-          token: "Bearer " + jwt.sign({userId: req.body.email_user}, 'RANDOM_TOKEN_SECRET', {expiresIn: '24h'})
+          token: token
         })
           user.save()
-          .then(data => res.status(200).json(lib.elementExist(data)))
+          .then(data => {
+            res.cookie("user_info", {
+              userId: data._id,
+              userName: data.name_user,
+              token: token
+             })
+             res.status(200).json({userId: data._id})
+          })
           .catch(error => res.status(404).json({error}))
     })
     .catch(error => res.status(500).json({error}))

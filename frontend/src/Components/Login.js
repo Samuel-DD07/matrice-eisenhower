@@ -33,8 +33,11 @@ export default function Login(props){
                 email_user: user_email.value,
                 password_user: user_password.value
             })
-            .then(() => console.log("ok"))
-            // .then(() => window.location.pathname = `/tasks/${user_name.value}`)
+            .then(() => {
+                console.log("ok")
+                setErrorMessages({ name: "isValid", message: "Inscription Réussie !" })
+                window.location.pathname = "/"
+            })
             .catch(() => setErrorMessages({ name: "user_email", message: "Cet user existe déjà. Connectez vous !" }))
             }
     
@@ -43,6 +46,7 @@ export default function Login(props){
     return(
         <Content>
             <Formulaire onSubmit={handleSubmit}>
+            <h3>S'Inscrire :</h3>
                 <div>
                     <label>Username </label>
                     <input type="text" name="user_name" />
@@ -64,7 +68,7 @@ export default function Login(props){
                     {renderErrorMessage("user_password_2")}
                 </div>
                 <div>
-                    <input type="submit" />
+                    <Button type="submit" />
                 </div>
                 </Formulaire>
         </Content>
@@ -72,17 +76,70 @@ export default function Login(props){
 }
 
 const Content = styled.div`
-
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 80px);
 `
 
 const Formulaire = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 20px;
+    width: 30%;
+    height: 80%;
+    background-color: #F1F1F1;
+    border: 2px solid  #E1E1E1;
 
+    & > h3{
+        text-align: center;
+        font-size: 30px;
+    }
+
+    & > *{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        
+        & > *{
+            height: 40px;
+            font-size: 20px;
+        }
+
+        input {
+            font-size: 20px;
+        }
+    }
+`
+
+const Button = styled.input`
+    background-color: #F08080;
+    border: 1px solid #B22222;
+    color: white;
+    transition: 0.5s all ease;
+
+    &:hover{
+            background-color: #B22222;
+            transition: 0.5s all ease;
+        }
 `
 
 const Message = styled.h3`
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F08080;
+    color: white;
 `
 
 const MessageTrue = styled.h3`
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #58D68D;
+    color: white;
 `
