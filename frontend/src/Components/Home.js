@@ -13,10 +13,10 @@ export default function Home(props){
             <div>
                 <Content>
                     <div>
-                        <h1>Bienvenue sur <br />Matrice - Eisenhower !</h1>
-                        <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</h3>
+                        <h1>Soyez plus Productif avec Matrice - Eisenhower !</h1>
+                        <h3>Grâce à cette outil, augmenter votre productivité via notre sytème de priorité.</h3>
                     </div>
-                    {/* <Image></Image> */}
+                    <Image></Image>
                 </Content>
             </div>
         )   
@@ -24,31 +24,30 @@ export default function Home(props){
 }
 
 const Content = styled.section`
-    position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100vw;
-    height: calc(100vh - 100px);    
+    height: calc(100vh - 80px);
+    padding-left: 50px;
 
     & > div{
-        width: 70vw;        
-        z-index: 2;
+        width: 600px;
 
-        & > h3, p{
-            width: 60%;    
+        & > {
+            h3{
+                font-size: 30px;
+            }
         }
     }
 `
 
 const Image = styled.span`
-    position: absolute;
-    right: 2vw;
-    bottom: 0px;
-    background-image: url(${background});
-    background-size: 100% 100%;
+    display: block;
+    width: 800px;
+    height: 100%;
+    background: url(${background});
     background-position: center;
-    height: calc(100vh - 100px);
-    opacity: 0.75;
-    width: 60vw;
+    background-size: cover;
+    background-repeat: no-repeat;
 `
