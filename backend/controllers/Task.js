@@ -4,7 +4,7 @@ const lib = require('../library/my_fonction')
 exports.dataTask = async (req, res) =>{
     const id = req.params.user_id
     const tasks = await Task.find({
-      userId: id
+      user_id: id
     })
     res.status(200).json(lib.tabIsEmpty(tasks))
 }

@@ -85,13 +85,15 @@ const Content = styled.div`
 `
 
 const Formulaire = styled.form`
+position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-start;
     padding: 20px;
+    margin-top: 100px;
     width: 30%;
-    height: 80%;
+    height: 100%;
     background-color: #F1F1F1;
     border: 2px solid  #E1E1E1;
 
