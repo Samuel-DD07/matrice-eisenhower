@@ -45,7 +45,7 @@ exports.deleteOneTask = async (req, res) =>{
 exports.updateOneTask = (req, res) =>{
     const id = req.params.id
       Task.updateOne({
-        userId: id
+        _id: id
       }, {
         ...req.body, _id : id
       })

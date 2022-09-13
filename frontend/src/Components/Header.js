@@ -27,7 +27,7 @@ export default function Header(props){
                     <Link to="/">Accueil</Link>
                 </li>
                 <li>
-                    <Link to="/Propos">A propos</Link>
+                    <Link to="/APropos">A propos</Link>
                 </li>                
                 <li>
                     <Link to="/Contact">Contact</Link>
@@ -72,6 +72,9 @@ const Content = styled.header`
     padding: 0 100px;
     font-weight: 500;
     background-color: #F9F9F9;
+
+    @media screen and (max-width: 1000px) {
+    }
 `
 
 const Containt = styled.nav`
