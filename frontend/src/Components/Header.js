@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import styled from 'styled-components'
+import Button from "./Button";
 
 export default function Header(props){
 
@@ -16,41 +17,28 @@ export default function Header(props){
         axios.get('/cookies/clear')
         .then(() => window.location.pathname = "/")
         .catch(error => console.log(error))
-        return;
     }
 
     return (
         <Content>
             <Containt>
-                <Link to="/"><Logo>M-E</Logo></Link>
-                <li>
-                    <Link to="/">Accueil</Link>
-                </li>
-                <li>
-                    <Link to="/APropos">A propos</Link>
-                </li>                
-                <li>
-                    <Link to="/Contact">Contact</Link>
-                </li>                
+                <Link to="/">
+                    <Logo>M-E</Logo>
+                </Link>
+                <Link to="/">Accueil</Link>                
+                <Link to="/APropos">A propos</Link>                                
+                <Link to="/Contact">Contact</Link>                                
             </Containt>
                 {
                     myName ?
                     <ContaintButton>
-                        <li>
-                            {myName}
-                        </li>
-                        <Button>
-                            <Link to="" onClick={handleClick}>Déconnection</Link>
-                        </Button>
+                        Utilisateur : {myName}
+                        <Button value="Déconnection" type={true} onClick={handleClick}/>
                     </ContaintButton>
                     :
                     <ContaintButton>
-                        <Button>
-                            <Link to="/Auth">Se Connecter</Link>
-                        </Button>
-                        <Button>
-                            <Link to="/Login">S'inscrire</Link>
-                        </Button>
+                        <Button value="Se Connecter !" links="/Auth" type={true}/>
+                        <Button value="S'inscrire !" links="/Login" type={false}/>
                     </ContaintButton>
                 }
         </Content>
@@ -71,9 +59,11 @@ const Content = styled.header`
     height: 80px;
     padding: 0 100px;
     font-weight: 500;
-    background-color: #F9F9F9;
+    background-color: #F5F5F5;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1200px){
+        
     }
 `
 
@@ -86,9 +76,8 @@ const Containt = styled.nav`
 
     & > *{
         padding: 10px;
+        border-radius: 10px;
         transition: 0.5s all ease;
-        border-radius: 5px;
-
         &:hover{
             background-color: rgba(0, 0, 0, 0.1 );
             transition: 0.5s all ease;
@@ -100,30 +89,4 @@ const ContaintButton = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 300px;
-`
-
-const Button = styled.li`
-    text-align: center;
-    width: 200px;
-    padding: 10px;
-    margin: 0px 10px;
-    border-radius: 5px;
-    transition: 0.5s all ease;
-
-    &:hover{
-        background-color: rgba(0, 0, 0, 0.1 );
-        transition: 0.5s all ease;
-    }
-    
-    &:nth-child(2n){
-        background-color: #F08080;
-        border: 1px solid #B22222;
-        color: white;
-
-        &:hover{
-            background-color: #B22222;
-            transition: 0.5s all ease;
-        }
-    }
 `

@@ -34,7 +34,6 @@ export default function Login(props){
                 password_user: user_password.value
             })
             .then(() => {
-                console.log("ok")
                 setErrorMessages({ name: "isValid", message: "Inscription Réussie !" })
                 window.location.pathname = "/"
             })
@@ -46,7 +45,7 @@ export default function Login(props){
     return(
         <Content>
             <Formulaire onSubmit={handleSubmit}>
-            <h3>S'Inscrire :</h3>
+            <h3>S'inscrire :</h3>
                 <div>
                     <label>Username </label>
                     <input type="text" name="user_name" />
