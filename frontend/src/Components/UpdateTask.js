@@ -10,7 +10,6 @@ export default function UpdateTask(props){
     function handleSubmit(event){
         event.preventDefault()
         const {name_task, description_task, is_important, is_urgence} = document.forms[0]
-        console.log(name_task.value, description_task.value, is_important.checked, is_urgence.checked)
         axios.put(`/tasks/${taskId}`, {
             name_task: name_task.value,
             description_task: description_task.value,

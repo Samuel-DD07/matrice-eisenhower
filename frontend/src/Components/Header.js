@@ -37,8 +37,8 @@ export default function Header(props){
                     </ContaintButton>
                     :
                     <ContaintButton>
-                        <Button value="Se Connecter !" links="/Auth" type={true}/>
-                        <Button value="S'inscrire !" links="/Login" type={false}/>
+                        <Button value="Se Connecter" links="/Auth" type={true}/>
+                        <Button value="S'inscrire" links="/Login" type={false}/>
                     </ContaintButton>
                 }
         </Content>
