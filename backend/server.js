@@ -8,7 +8,8 @@ const mongoose = require('mongoose')
 const UserRoute = require('./routes/User')
 const TaskRoute = require('./routes/Task')
 const CookieRoute = require('./routes/Cookies')
-const thePath = path.resolve(__dirname, "../frontend/build")
+const thePath = path.resolve(__dirname, "../build")
+console.log(thePath)
 
 mongoose.connect('mongodb+srv://TheBlackLord:lEqEBjgCTCQqhtS4@cluster0.dlqjk.mongodb.net/?retryWrites=true&w=majority',
 {useNewUrlParser: true, useUnifiedTopology: true })
